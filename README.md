@@ -1,4 +1,13 @@
 # rrl_planning
+## GeoPoint class
+The essence of a geographic point.
+The coordinates of the point and optionally the height above sea level are set. If the height is not specified, then the height is taken from the SRTM3 data.
+Geographic point methods:
+- calculation of azimuth between two points
+- calculates the coordinates of the next point in the given azimuth and distance.
+- calculation of the distance between two points in meters in a straight line.
+- calculation of the distance between two points in meters on the surface of the planet.
+
 ## SRTM data
 To work with SRTM3 files, you need to create a "data" folder in the root folder.
 In the "data" folder, create a "cache" and "srtm3" folder.
