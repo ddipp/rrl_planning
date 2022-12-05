@@ -7,6 +7,7 @@ Geographic point methods:
 - calculates the coordinates of the next point in the given azimuth and distance.
 - calculation of the distance between two points in meters in a straight line.
 - calculation of the distance between two points in meters on the surface of the planet.
+- each point has properties - coordinates in the x, y, z format with the origin at the center of the planet.
 
 ```python3
 from lib import GeoPoint
@@ -19,6 +20,12 @@ p1 = GeoPoint(90, 0, name='N')
 p2 = GeoPoint(-90, 0, name='S')
 assert p1.distance_to(p2) == 12744717.0
 assert p1.arc_distance_to(p2) == 20015115.070354454
+
+p3 = GeoPoint(0, 0, name='00')
+assert p3.elevation is None  # This point is in the ocean
+assert p3.x == 6371009
+assert p3.y == 0
+assert p3.z == 0
 ```
 
 ## SRTM data
