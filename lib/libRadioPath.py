@@ -5,6 +5,9 @@ EARTH_RADIUS = 6371.009 * 1000
 
 
 class RadioPath(object):
+    """ Radio path. Start and end points, antenna heights and operating frequency are set.
+    """
+
     def __init__(self, startpoint: GeoPoint, startheight: int, stoppoint: GeoPoint, stopheight: int, frequency: int):
         self.startpoint = startpoint
         self.startheight = startheight

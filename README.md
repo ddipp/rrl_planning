@@ -7,6 +7,7 @@ Radio path. Start and end points, antenna heights and operating frequency are se
 
 ```python3
 from lib import GeoPoint, RadioPath
+
 p1 = GeoPoint(56.827275, 60.004317, name='Point1')
 p2 = GeoPoint(56.763559, 60.189839, name='Point2')
 radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=7)
@@ -36,6 +37,7 @@ Geographic point methods:
 
 ```python3
 from lib import GeoPoint
+
 p1 = GeoPoint(43.350183, 42.451874, name='Elbrus')
 p2 = GeoPoint(43.350183, 42.451874, name='Elbrus sea level', elevation=0)
 assert p1.distance_to(p2) == 5518.999999999588
