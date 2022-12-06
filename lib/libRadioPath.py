@@ -25,3 +25,11 @@ class RadioPath(object):
         t = -1 + distance / (self.length / 2)
         h = EARTH_RADIUS * (m.sqrt((1 - (t**2) * (m.sin(a)**2))) - m.cos(a))
         return h
+
+    def los_height(self, distance: int) -> float:
+        """ Calculates the height (in meters) of the line of sight
+            above a straight line at a given distance (in meters)
+            between the start and end points of the path
+            (taking into account the height of the antenna suspension).
+        """
+        return self.line_equation_k * distance + self.line_equation_b

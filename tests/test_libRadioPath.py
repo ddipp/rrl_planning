@@ -18,6 +18,9 @@ def test_radio_path1():
     assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
     assert radiopath1.line_equation_b == 252
     assert radiopath1.line_equation_k == 0
+    assert int(radiopath1.los_height(0)) == 252
+    assert int(radiopath1.los_height(radiopath1.length)) == 252
+    assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
 
 
 def test_radio_path2():
@@ -37,3 +40,6 @@ def test_radio_path2():
     assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
     assert radiopath1.line_equation_b == 529
     assert radiopath1.line_equation_k == -0.01582009779681836
+    assert int(radiopath1.los_height(0)) == 529
+    assert int(radiopath1.los_height(radiopath1.length)) == 318
+    assert int(radiopath1.los_height(radiopath1.length / 2)) == 423

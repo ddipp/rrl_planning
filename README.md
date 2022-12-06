@@ -3,6 +3,7 @@
 Radio path. Start and end points, antenna heights and operating frequency are set.
 - the height of the planet's arc at a given distance (in meters) from the start of the path
 - radio channel length in meters
+- alculates the height (in meters) of the line of sight above a straight line at a given distance (in meters) between the start and end points of the path (taking into account the height of the antenna suspension).
 
 ```python3
 from lib import GeoPoint, RadioPath
