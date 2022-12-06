@@ -1,4 +1,25 @@
 # rrl_planning
+## RadioPath class
+Radio path. Start and end points, antenna heights and operating frequency are set.
+- the height of the planet's arc at a given distance (in meters) from the start of the path
+- radio channel length in meters
+
+```python3
+from lib import GeoPoint, RadioPath
+p1 = GeoPoint(56.827275, 60.004317, name='Point1')
+p2 = GeoPoint(56.763559, 60.189839, name='Point2')
+radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=7)
+assert int(radiopath1.length) == 13337
+assert radiopath1.startpoint.elevation == 509
+assert radiopath1.stoppoint.elevation == 298
+assert radiopath1.arc_height(0) == 0
+assert radiopath1.arc_height(radiopath1.length) == 0
+assert int(radiopath1.arc_height(radiopath1.length / 2)) == 3
+assert int(radiopath1.arc_height(radiopath1.length / 4)) == 2
+assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
+```
+
+
 ## GeoPoint class
 The essence of a geographic point.
 The coordinates of the point and optionally the height above sea level are set. If the height is not specified, then the height is taken from the SRTM3 data.
