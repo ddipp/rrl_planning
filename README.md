@@ -26,6 +26,15 @@ assert p3.elevation is None  # This point is in the ocean
 assert p3.x == 6371009
 assert p3.y == 0
 assert p3.z == 0
+
+p4 = GeoPoint(0, 0)
+p5 = GeoPoint(1, 1)
+assert p4.azimuth(p5) == 44.99563645534485
+assert p5.azimuth(p4) == 225.00436354465515
+
+p6 = GeoPoint(54.9132538, 34.3426619)
+p7 = p6.nextpoint(azimuth=90, distance=500)
+assert (p7.latitude, p7.longitude) == (54.913253548816705, 34.350484580324036)
 ```
 
 ## SRTM data

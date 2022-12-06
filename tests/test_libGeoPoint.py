@@ -59,6 +59,14 @@ def test_geo_azimuth():
     p6 = GeoPoint(55.9132538, 34.3426619)
     assert p5.azimuth(p6) == 0.0
     assert p6.azimuth(p5) == 180
+    p7 = GeoPoint(0, 0)
+    p8 = GeoPoint(1, 1)
+    assert p7.azimuth(p8) == 44.99563645534485
+    assert p8.azimuth(p7) == 225.00436354465515
+    p7 = GeoPoint(0, 0)
+    p8 = GeoPoint(90, 0)
+    assert p7.azimuth(p8) == 0
+    assert p8.azimuth(p7) == 180
 
 
 def test_geo_nextpoint():
