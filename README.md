@@ -18,6 +18,9 @@ assert radiopath1.arc_height(radiopath1.length) == 0
 assert int(radiopath1.arc_height(radiopath1.length / 2)) == 3
 assert int(radiopath1.arc_height(radiopath1.length / 4)) == 2
 assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
+assert int(radiopath1.los_height(0)) == 252
+assert int(radiopath1.los_height(radiopath1.length)) == 252
+assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
 ```
 
 
