@@ -50,4 +50,6 @@ from lib.srtm import srtm
 assert srtm.get_elevation_point(54.999999, 41.999999) == 158
 assert srtm.get_elevation_point(54.238421, 57.995044) == 605
 assert srtm.get_elevation_point(55.013505, 48.862878) == 202
+assert srtm.get_elevation_point(55.841989, -41.038896) is None  # No data for open ocean, returns None
+assert srtm.get_elevation_point(2.238345, 118.071729) == 0  # For coastal waters, returns 0
 ```
