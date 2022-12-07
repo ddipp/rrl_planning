@@ -46,27 +46,61 @@ def hgt_file(latitude: float, longitude: float) -> str:
 
 
 def get_elevation_point(latitude: float, longitude: float) -> int:
+    """ For the given coordinates, returns the height of the ground level above sea level
+        (or None if there is no data).
+        To get the height of one point, we read only one byte from the file.
     """
-    For the given coordinates, returns the height of the ground level above sea level (or None if there is no data)
-    """
-    SAMPLES = 1201
     srtm_file = hgt_file(latitude, longitude)
     if srtm_file is None:
         return None
-    with open(srtm_file, 'rb') as hgt_data:
-        elevations = np.fromfile(hgt_data, np.dtype('>i2'), SAMPLES * SAMPLES).reshape((SAMPLES, SAMPLES))
-        # For the northern hemisphere
-        if latitude > 0:
-            i = 1200 - int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
-        # For the southern hemisphere
-        else:
-            i = int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
 
-        # For the Eastern Hemisphere
-        if longitude > 0:
-            j = int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
-        # For the Western Hemisphere
-        else:
-            j = 1200 - int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+    # For the northern hemisphere
+    if latitude > 0:
+        i = 1200 - int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
+    # For the southern hemisphere
+    else:
+        i = int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
 
-    return elevations[i, j].astype(int)
+    # For the Eastern Hemisphere
+    if longitude > 0:
+        j = int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+    # For the Western Hemisphere
+    else:
+        j = 1200 - int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+
+    pos = (i * 1201) + j
+
+    with open(srtm_file, "rb") as f:
+        f.seek(pos * 2)
+        val = int.from_bytes(f.read(2), byteorder="big", signed="True")
+        if not val == -32768:
+            return val
+        else:
+            return None
+
+
+# def get_elevation_point(latitude: float, longitude: float) -> int:
+#     """
+#     For the given coordinates, returns the height of the ground level above sea level (or None if there is no data)
+#     """
+#     SAMPLES = 1201
+#     srtm_file = hgt_file(latitude, longitude)
+#     if srtm_file is None:
+#         return None
+#     with open(srtm_file, 'rb') as hgt_data:
+#         elevations = np.fromfile(hgt_data, np.dtype('>i2'), SAMPLES * SAMPLES).reshape((SAMPLES, SAMPLES))
+#         # For the northern hemisphere
+#         if latitude > 0:
+#             i = 1200 - int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
+#         # For the southern hemisphere
+#         else:
+#             i = int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
+
+#         # For the Eastern Hemisphere
+#         if longitude > 0:
+#             j = int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+#         # For the Western Hemisphere
+#         else:
+#             j = 1200 - int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+
+#     return elevations[i, j].astype(int)

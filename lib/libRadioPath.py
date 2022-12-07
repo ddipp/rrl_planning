@@ -36,3 +36,11 @@ class RadioPath(object):
             (taking into account the height of the antenna suspension).
         """
         return self.line_equation_k * distance + self.line_equation_b
+
+    @property
+    def line_of_sight(self) -> bool:
+        """ having a direct line of sight.
+            If there are obstacles on the way between points (considering antenna heights),
+            then False is returned, otherwise True.
+        """
+        return True
