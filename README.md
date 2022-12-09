@@ -79,4 +79,10 @@ assert srtm.get_elevation_point(54.238421, 57.995044) == 605
 assert srtm.get_elevation_point(55.013505, 48.862878) == 202
 assert srtm.get_elevation_point(55.841989, -41.038896) is None  # No data for open ocean, returns None
 assert srtm.get_elevation_point(2.238345, 118.071729) == 0  # For coastal waters, returns 0
+
+points = ((-4.003640, -79.058322), (-3.991163, -79.092340),
+		  (-3.957352, -79.023306), (-3.991068, -79.015972))
+elevations = ((-4.003640, -79.058322, 3132), (-3.991163, -79.092340, 2005),
+              (-3.957352, -79.023306, 1553), (-3.991068, -79.015972, 1507))
+assert srtm.get_all_elevations_points(points) == elevations
 ```

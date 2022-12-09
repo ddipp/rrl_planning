@@ -1,4 +1,5 @@
 import math as m
+from lib.srtm import srtm
 from lib import GeoPoint
 
 EARTH_RADIUS = 6371.009 * 1000
@@ -20,6 +21,8 @@ class RadioPath(object):
         self.line_equation_k = ((self.startpoint.elevation + self.startheight)
                                 - (self.stoppoint.elevation + self.stopheight)) / (0 - self.length)
         self.line_equation_b = (self.stoppoint.elevation + self.stopheight) - self.line_equation_k * self.length
+        # List for relief
+        self.relief = list()
 
     def arc_height(self, distance: int) -> float:
         """ The height of the planet's arc at a given distance (in meters) from the start of the path
@@ -36,6 +39,21 @@ class RadioPath(object):
             (taking into account the height of the antenna suspension).
         """
         return self.line_equation_k * distance + self.line_equation_b
+
+    def get_relief(self, incremental: int = 10):
+        distance = 0
+
+        nextpoint = self.startpoint
+        self.relief.append((0, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))
+
+        for i in range(int(self.length // incremental)):
+            distance += incremental
+            nextpoint = self.startpoint.nextpoint(self.startpoint.azimuth(self.stoppoint), distance)
+            elevation = srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)
+            self.relief.append((distance, elevation))
+
+        nextpoint = self.stoppoint
+        self.relief.append((self.length, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))
 
     @property
     def line_of_sight(self) -> bool:

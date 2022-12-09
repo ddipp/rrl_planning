@@ -1,5 +1,4 @@
 import math as m
-import numpy as np
 from zipfile import ZipFile
 from pathlib import Path
 
@@ -80,15 +79,16 @@ def get_elevation_point(latitude: float, longitude: float) -> int:
 
 
 def get_all_elevations_points(points: tuple) -> tuple:
+    """ For all points returns the height of the ground level above sea level
+        (or None if there is no data).
+        To get the height of one point, we read only one byte from the file.
+    """
     elevations = []
     for point in points:
         elevations.append((*point, get_elevation_point(*point)))
     return tuple(elevations)
 
 # def get_elevation_point(latitude: float, longitude: float) -> int:
-#     """
-#     For the given coordinates, returns the height of the ground level above sea level (or None if there is no data)
-#     """
 #     SAMPLES = 1201
 #     srtm_file = hgt_file(latitude, longitude)
 #     if srtm_file is None:
