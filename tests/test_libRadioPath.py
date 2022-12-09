@@ -67,4 +67,4 @@ def test_radio_path3():
     assert int(radiopath1.los_height(0)) == 2243
     assert int(radiopath1.los_height(radiopath1.length)) == 2394
     assert int(radiopath1.los_height(radiopath1.length / 2)) == 2318
-    assert radiopath1.line_of_sight is True
+    assert radiopath1.line_of_sight is False

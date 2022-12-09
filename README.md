@@ -4,6 +4,7 @@ Radio path. Start and end points, antenna heights and operating frequency are se
 - the height of the planet's arc at a given distance (in meters) from the start of the path
 - radio channel length in meters
 - calculates the height (in meters above sea level) of the line of sight above the line at a given distance (in meters) between the start and end points of the path (taking into account the height of the antenna suspension). Height in meters above ... above a straight line (not on the arc of the ball) between the points if the points were at sea level.
+- having a direct line of sight.
 
 ```python3
 from lib import GeoPoint, RadioPath
@@ -22,6 +23,7 @@ assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(rad
 assert int(radiopath1.los_height(0)) == 252
 assert int(radiopath1.los_height(radiopath1.length)) == 252
 assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
+assert radiopath1.line_of_sight is True
 ```
 
 

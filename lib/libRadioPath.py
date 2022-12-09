@@ -41,6 +41,8 @@ class RadioPath(object):
         return self.line_equation_k * distance + self.line_equation_b
 
     def get_relief(self, incremental: int = 10):
+        """ Calculate elevation points on a straight line between start and end.
+        """
         distance = 0
 
         nextpoint = self.startpoint
@@ -50,7 +52,10 @@ class RadioPath(object):
             distance += incremental
             nextpoint = self.startpoint.nextpoint(self.startpoint.azimuth(self.stoppoint), distance)
             elevation = srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)
-            self.relief.append((distance, elevation))
+            # To save memory, if the previous point is at the same height and
+            # the distance to it is not too large, then I do not add a new one
+            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 200:
+                self.relief.append((distance, elevation))
 
         nextpoint = self.stoppoint
         self.relief.append((self.length, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))
@@ -61,4 +66,18 @@ class RadioPath(object):
             If there are obstacles on the way between points (considering antenna heights),
             then False is returned, otherwise True.
         """
+        # checking the availability of terrain data. If not, then we calculate.
+        if len(self.relief) == 0:
+            self.get_relief()
+
+        # Iterate over the heights and compare with the height of the line of sight at that point.
+        for i in self.relief:
+            distance = i[0]
+            elevation = i[1]
+            los_height = self.los_height(distance)
+            arc_height = self.arc_height(distance)
+            # Compare line of sight height and surface height + planet curvature
+            if los_height < elevation + arc_height:
+                return False
+
         return True
