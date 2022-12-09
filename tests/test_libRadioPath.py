@@ -4,10 +4,10 @@ from lib import GeoPoint, RadioPath
 def test_radio_path1():
     p1 = GeoPoint(57.366543, 60.524290, name='Point1')
     p2 = GeoPoint(57.271203, 60.499945, name='Point2')
-    radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=7)
+    radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=17)
     assert radiopath1.startpoint == p1
     assert radiopath1.stoppoint == p2
-    assert radiopath1.frequency == 7
+    assert radiopath1.frequency == 17
     assert int(radiopath1.length) == 10702
     assert radiopath1.startpoint.elevation == 232
     assert radiopath1.stoppoint.elevation == 232
@@ -21,7 +21,10 @@ def test_radio_path1():
     assert int(radiopath1.los_height(0)) == 252
     assert int(radiopath1.los_height(radiopath1.length)) == 252
     assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
-    assert radiopath1.line_of_sight is True
+    assert radiopath1.line_of_sight() is True
+    assert radiopath1.visibility_in_fresnel_zone(1) is True
+    assert radiopath1.visibility_in_fresnel_zone(2) is True
+    assert len(radiopath1.relief) == 54
 
 
 def test_radio_path2():
@@ -44,7 +47,10 @@ def test_radio_path2():
     assert int(radiopath1.los_height(0)) == 529
     assert int(radiopath1.los_height(radiopath1.length)) == 318
     assert int(radiopath1.los_height(radiopath1.length / 2)) == 423
-    assert radiopath1.line_of_sight is True
+    assert radiopath1.line_of_sight() is True
+    assert radiopath1.visibility_in_fresnel_zone(1) is True
+    assert radiopath1.visibility_in_fresnel_zone(2) is True
+    assert len(radiopath1.relief) == 143
 
 
 def test_radio_path3():
@@ -67,4 +73,7 @@ def test_radio_path3():
     assert int(radiopath1.los_height(0)) == 2243
     assert int(radiopath1.los_height(radiopath1.length)) == 2394
     assert int(radiopath1.los_height(radiopath1.length / 2)) == 2318
-    assert radiopath1.line_of_sight is False
+    assert radiopath1.line_of_sight() is False
+    assert radiopath1.visibility_in_fresnel_zone(1) is False
+    assert radiopath1.visibility_in_fresnel_zone(2) is False
+    assert len(radiopath1.relief) == 92
