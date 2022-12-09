@@ -79,6 +79,12 @@ def get_elevation_point(latitude: float, longitude: float) -> int:
             return None
 
 
+def get_all_elevations_points(points: tuple) -> tuple:
+    elevations = []
+    for point in points:
+        elevations.append((*point, get_elevation_point(*point)))
+    return tuple(elevations)
+
 # def get_elevation_point(latitude: float, longitude: float) -> int:
 #     """
 #     For the given coordinates, returns the height of the ground level above sea level (or None if there is no data)
