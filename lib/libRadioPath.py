@@ -5,7 +5,7 @@ from lib import GeoPoint
 EARTH_RADIUS = 6371.009 * 1000
 
 
-class RadioPath(object):
+class RadioPath():
     """ Radio path. Start and end points, antenna heights and operating frequency are set.
     """
 
@@ -40,6 +40,13 @@ class RadioPath(object):
         """
         return self.line_equation_k * distance + self.line_equation_b
 
+    def frenzel_zone_size(self, zone_number: int, distance: int) -> float:
+        # Fresnel zone size
+        d1 = distance / 1000
+        d2 = int(self.length - distance) / 1000
+        r1 = 17.3 * m.sqrt((d1 * d2) / (self.frequency * (d1 + d2)))
+        return r1 * m.sqrt(zone_number)
+
     def get_relief(self, incremental: int = 10):
         """ Calculate elevation points on a straight line between start and end.
         """
@@ -60,7 +67,27 @@ class RadioPath(object):
         nextpoint = self.stoppoint
         self.relief.append((self.length, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))
 
-    @property
+    def visibility_in_fresnel_zone(self, zone_number) -> bool:
+        """ the presence of visibility in the fresnel zones.
+            If there are obstacles on the way between points (considering antenna heights),
+            then False is returned, otherwise True.
+        """
+        # checking the availability of terrain data. If not, then we calculate.
+        if len(self.relief) == 0:
+            self.get_relief()
+
+        for i in self.relief:
+            distance = i[0]
+            elevation = i[1]
+            los_height = self.los_height(distance)
+            arc_height = self.arc_height(distance)
+            frenzel_zone = self.frenzel_zone_size(1, distance)
+            # Compare line of sight height and surface height + planet curvature
+            if los_height - frenzel_zone < elevation + arc_height:
+                return False
+
+        return True
+
     def line_of_sight(self) -> bool:
         """ having a direct line of sight.
             If there are obstacles on the way between points (considering antenna heights),
