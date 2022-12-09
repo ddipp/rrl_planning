@@ -1,4 +1,32 @@
 # rrl_planning
+## RadioPath class
+Radio path. Start and end points, antenna heights and operating frequency are set.
+- the height of the planet's arc at a given distance (in meters) from the start of the path
+- radio channel length in meters
+- calculates the height (in meters above sea level) of the line of sight above the line at a given distance (in meters) between the start and end points of the path (taking into account the height of the antenna suspension). Height in meters above ... above a straight line (not on the arc of the ball) between the points if the points were at sea level.
+- having a direct line of sight.
+
+```python3
+from lib import GeoPoint, RadioPath
+
+p1 = GeoPoint(56.827275, 60.004317, name='Point1')
+p2 = GeoPoint(56.763559, 60.189839, name='Point2')
+radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=7)
+assert int(radiopath1.length) == 13337
+assert radiopath1.startpoint.elevation == 509
+assert radiopath1.stoppoint.elevation == 298
+assert radiopath1.arc_height(0) == 0
+assert radiopath1.arc_height(radiopath1.length) == 0
+assert int(radiopath1.arc_height(radiopath1.length / 2)) == 3
+assert int(radiopath1.arc_height(radiopath1.length / 4)) == 2
+assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
+assert int(radiopath1.los_height(0)) == 252
+assert int(radiopath1.los_height(radiopath1.length)) == 252
+assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
+assert radiopath1.line_of_sight is True
+```
+
+
 ## GeoPoint class
 The essence of a geographic point.
 The coordinates of the point and optionally the height above sea level are set. If the height is not specified, then the height is taken from the SRTM3 data.
@@ -11,6 +39,7 @@ Geographic point methods:
 
 ```python3
 from lib import GeoPoint
+
 p1 = GeoPoint(43.350183, 42.451874, name='Elbrus')
 p2 = GeoPoint(43.350183, 42.451874, name='Elbrus sea level', elevation=0)
 assert p1.distance_to(p2) == 5518.999999999588
@@ -50,4 +79,12 @@ from lib.srtm import srtm
 assert srtm.get_elevation_point(54.999999, 41.999999) == 158
 assert srtm.get_elevation_point(54.238421, 57.995044) == 605
 assert srtm.get_elevation_point(55.013505, 48.862878) == 202
+assert srtm.get_elevation_point(55.841989, -41.038896) is None  # No data for open ocean, returns None
+assert srtm.get_elevation_point(2.238345, 118.071729) == 0  # For coastal waters, returns 0
+
+points = ((-4.003640, -79.058322), (-3.991163, -79.092340),
+		  (-3.957352, -79.023306), (-3.991068, -79.015972))
+elevations = ((-4.003640, -79.058322, 3132), (-3.991163, -79.092340, 2005),
+              (-3.957352, -79.023306, 1553), (-3.991068, -79.015972, 1507))
+assert srtm.get_all_elevations_points(points) == elevations
 ```

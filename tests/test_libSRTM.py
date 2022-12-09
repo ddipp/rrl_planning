@@ -39,6 +39,9 @@ def test_get_elevation_point_NE():
     assert srtm.get_elevation_point(52.959848, -6.336204) == 449
     assert srtm.get_elevation_point(52.968336, -6.183284) == 203
     assert srtm.get_elevation_point(55.841989, -41.038896) is None
+    assert srtm.get_elevation_point(54.742000, -8.539797) == 178
+    assert srtm.get_elevation_point(54.747656, -8.524792) == 176
+    assert srtm.get_elevation_point(37.185165, -118.582057) == 3540
 
 
 def test_get_elevation_point_SE():
@@ -46,3 +49,13 @@ def test_get_elevation_point_SE():
     assert srtm.get_elevation_point(-3.991163, -79.092340) == 2005
     assert srtm.get_elevation_point(-3.957352, -79.023306) == 1553
     assert srtm.get_elevation_point(-3.991068, -79.015972) == 1507
+    assert srtm.get_elevation_point(-46.431256, -73.741309) == 0
+    assert srtm.get_elevation_point(-47.194529, -73.468960) == 3370
+    assert srtm.get_elevation_point(-54.446149, -70.842950) == 1941
+
+
+def test_get_all_points():
+    points = ((-4.003640, -79.058322), (-3.991163, -79.092340), (-3.957352, -79.023306), (-3.991068, -79.015972))
+    elevations = ((-4.003640, -79.058322, 3132), (-3.991163, -79.092340, 2005),
+                  (-3.957352, -79.023306, 1553), (-3.991068, -79.015972, 1507))
+    assert srtm.get_all_elevations_points(points) == elevations

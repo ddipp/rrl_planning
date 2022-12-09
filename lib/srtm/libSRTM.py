@@ -13,7 +13,7 @@ def file_name_for_point(latitude: float, longitude: float) -> str:
     north_south = 'N' if latitude >= 0 else 'S'
     east_west = 'E' if longitude >= 0 else 'W'
     file_name = '{0}{1}{2}{3}.hgt'.format(north_south, str(int(abs(m.floor(latitude)))).zfill(2),
-                                          east_west, str(int(abs(m.floor(longitude)))).zfill(3))  # TODO: Разве тут нужны str(int?
+                                          east_west, str(int(abs(m.floor(longitude)))).zfill(3))
     return file_name
 
 
@@ -45,8 +45,9 @@ def hgt_file(latitude: float, longitude: float) -> str:
 
 
 def get_elevation_point(latitude: float, longitude: float) -> int:
-    """
-    For the given coordinates, returns the height of the ground level above sea level (or None if there is no data)
+    """ For the given coordinates, returns the height of the ground level above sea level
+        (or None if there is no data).
+        To get the height of one point, we read only one byte from the file.
     """
     srtm_file = hgt_file(latitude, longitude)
     if srtm_file is None:
@@ -75,3 +76,37 @@ def get_elevation_point(latitude: float, longitude: float) -> int:
             return val
         else:
             return None
+
+
+def get_all_elevations_points(points: tuple) -> tuple:
+    """ For all points returns the height of the ground level above sea level
+        (or None if there is no data).
+        To get the height of one point, we read only one byte from the file.
+    """
+    elevations = []
+    for point in points:
+        elevations.append((*point, get_elevation_point(*point)))
+    return tuple(elevations)
+
+# def get_elevation_point(latitude: float, longitude: float) -> int:
+#     SAMPLES = 1201
+#     srtm_file = hgt_file(latitude, longitude)
+#     if srtm_file is None:
+#         return None
+#     with open(srtm_file, 'rb') as hgt_data:
+#         elevations = np.fromfile(hgt_data, np.dtype('>i2'), SAMPLES * SAMPLES).reshape((SAMPLES, SAMPLES))
+#         # For the northern hemisphere
+#         if latitude > 0:
+#             i = 1200 - int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
+#         # For the southern hemisphere
+#         else:
+#             i = int(round((abs(latitude) - abs(int(latitude))) * (1201 - 1), 0))
+
+#         # For the Eastern Hemisphere
+#         if longitude > 0:
+#             j = int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+#         # For the Western Hemisphere
+#         else:
+#             j = 1200 - int(round((abs(longitude) - abs(int(longitude))) * (1201 - 1), 0))
+
+#     return elevations[i, j].astype(int)
