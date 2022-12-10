@@ -119,7 +119,8 @@ class RadioPath():
             - height of the first fresnel zone
             - height of the second fresnel zone
         """
-        chart_data = []
+        chart_data = {'distance': [], 'relief': [], 'relief_arc': [], 'los_height': [], 'frenzel_zone_1_top': [],
+                      'frenzel_zone_1_bottom': [], 'frenzel_zone_2_top': [], 'frenzel_zone_2_bottom': []}
         # checking the availability of terrain data. If not, then we calculate.
         if len(self.relief) == 0:
             self.get_relief()
@@ -127,9 +128,14 @@ class RadioPath():
         for point in self.relief:
             distance = point[0]
             elevation = point[1]
-            los_height = self.los_height(distance)
             arc_height = self.arc_height(distance)
-            frenzel_zone_1 = self.frenzel_zone_size(1, distance)
-            frenzel_zone_2 = self.frenzel_zone_size(2, distance)
-            chart_data.append((distance, elevation, los_height, arc_height, frenzel_zone_1, frenzel_zone_2))
+            los_height = self.los_height(distance)
+            chart_data['distance'].append(distance)
+            chart_data['relief'].append(elevation)
+            chart_data['relief_arc'].append(elevation + arc_height)
+            chart_data['los_height'].append(los_height)
+            chart_data['frenzel_zone_1_top'].append(los_height + self.frenzel_zone_size(1, distance))
+            chart_data['frenzel_zone_1_bottom'].append(los_height - self.frenzel_zone_size(1, distance))
+            chart_data['frenzel_zone_2_top'].append(los_height + self.frenzel_zone_size(2, distance))
+            chart_data['frenzel_zone_2_bottom'].append(los_height - self.frenzel_zone_size(2, distance))
         return chart_data

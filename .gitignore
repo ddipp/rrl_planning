@@ -6,4 +6,4 @@ data
 tmp
 log
 *.png
-path.py
+# path.py
