@@ -1,11 +1,25 @@
 # rrl_planning
+## Usage example
+For example, in the example.py file, the radio channel parameters (coordinates, antenna heights, frequency) are defined.
+The presence of a line of sight is displayed, taking into account the first and second Fresnel zones.
+Using mathplotlib, a radio channel profile is created.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install --no-cache-dir -r requirements.txt
+
+./example.py
+````
+
+![alt text](Point1-Point2.png?raw=true))
+
 ## RadioPath class
 Radio path. Start and end points, antenna heights and operating frequency are set.
 - the height of the planet's arc at a given distance (in meters) from the start of the path
 - radio channel length in meters
 - calculates the height (in meters above sea level) of the line of sight above the line at a given distance (in meters) between the start and end points of the path (taking into account the height of the antenna suspension). Height in meters above ... above a straight line (not on the arc of the ball) between the points if the points were at sea level.
 - having a direct line of sight.
-- visibility in the fresnel zone
+- visibility with Fresnel Zone
 
 ```python3
 from lib import GeoPoint, RadioPath

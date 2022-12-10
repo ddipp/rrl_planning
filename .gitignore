@@ -1,8 +1,8 @@
 *.sublime-workspace
+*.sublime-project
 .venv/
 __pycache__
 data
 tmp
 log
-*.png
-path.py
+# path.py
