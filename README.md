@@ -27,6 +27,25 @@ assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
 assert radiopath1.line_of_sight() is True
 assert radiopath1.visibility_in_fresnel_zone(1) is True
 assert radiopath1.visibility_in_fresnel_zone(2) is True
+
+p1 = GeoPoint(57.366543, 60.524290, name='Point1')
+p2 = GeoPoint(57.271203, 60.499945, name='Point2')
+radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=17)
+assert int(radiopath1.length) == 10702
+assert radiopath1.startpoint.elevation == 232
+assert radiopath1.stoppoint.elevation == 232
+assert radiopath1.arc_height(0) == 0
+assert radiopath1.arc_height(radiopath1.length) == 0
+assert int(radiopath1.arc_height(radiopath1.length / 2)) == 2
+assert int(radiopath1.arc_height(radiopath1.length / 4)) == 1
+assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
+assert int(radiopath1.los_height(0)) == 252
+assert int(radiopath1.los_height(radiopath1.length)) == 252
+assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
+assert radiopath1.line_of_sight() is True
+assert radiopath1.visibility_in_fresnel_zone(1) is True
+assert radiopath1.visibility_in_fresnel_zone(2) is False
+
 ```
 
 

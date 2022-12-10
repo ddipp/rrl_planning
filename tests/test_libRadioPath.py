@@ -23,8 +23,8 @@ def test_radio_path1():
     assert int(radiopath1.los_height(radiopath1.length / 2)) == 252
     assert radiopath1.line_of_sight() is True
     assert radiopath1.visibility_in_fresnel_zone(1) is True
-    assert radiopath1.visibility_in_fresnel_zone(2) is True
-    assert len(radiopath1.relief) == 54
+    assert radiopath1.visibility_in_fresnel_zone(2) is False
+    assert len(radiopath1.relief) == 99
 
 
 def test_radio_path2():
@@ -50,7 +50,7 @@ def test_radio_path2():
     assert radiopath1.line_of_sight() is True
     assert radiopath1.visibility_in_fresnel_zone(1) is True
     assert radiopath1.visibility_in_fresnel_zone(2) is True
-    assert len(radiopath1.relief) == 143
+    assert len(radiopath1.relief) == 185
 
 
 def test_radio_path3():
@@ -76,4 +76,4 @@ def test_radio_path3():
     assert radiopath1.line_of_sight() is False
     assert radiopath1.visibility_in_fresnel_zone(1) is False
     assert radiopath1.visibility_in_fresnel_zone(2) is False
-    assert len(radiopath1.relief) == 92
+    assert len(radiopath1.relief) == 102
