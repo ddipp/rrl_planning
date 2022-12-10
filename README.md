@@ -107,7 +107,7 @@ assert (p7.latitude, p7.longitude) == (54.913253548816705, 34.350484580324036)
 ## SRTM data
 To work with terrain data, you need SRTM data.
 Typically SRTM archives include areas between 60 degrees north latitude and 56 degrees south latitude. But on the Internet there is data for the relief of the entire planet (apparently compiled from various sources).
-From this [link(http://viewfinderpanoramas.org/Coverage%20map%20viewfinderpanoramas_org3.htm) I downloaded all the data, then using the "utils/recompress.py" script, the data was reformatted into the form:
+From this [link](http://viewfinderpanoramas.org/Coverage%20map%20viewfinderpanoramas_org3.htm) I downloaded all the data, then using the "utils/recompress.py" script, the data was reformatted into the form:
 - folders with the name of the latitude in the format N00, N05, N34, S01, S45, etc.
 - inside latitude folders there are files for this latitude, each file is packed in zip. For example, folder N08 contains files N08E000.zip, N08E019.zip, N08E038.zip, N08E081.zip, N08E134.zip, N08W003.zip, etc.
 
