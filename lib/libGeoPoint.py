@@ -80,6 +80,7 @@ class GeoPoint():
     #    lon = atan2(y, x)
     # Don’t forget to convert back from radians to degrees.
 
+    # Coordinates in 3D projection centered on the center of the planet
     @property
     def x(self) -> float:
         if self.elevation:

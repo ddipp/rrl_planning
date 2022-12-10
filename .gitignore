@@ -1,4 +1,5 @@
 *.sublime-workspace
+*.sublime-project
 .venv/
 __pycache__
 data

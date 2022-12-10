@@ -76,9 +76,9 @@ class RadioPath():
         if len(self.relief) == 0:
             self.get_relief()
 
-        for i in self.relief:
-            distance = i[0]
-            elevation = i[1]
+        for point in self.relief:
+            distance = point[0]
+            elevation = point[1]
             los_height = self.los_height(distance)
             arc_height = self.arc_height(distance)
             frenzel_zone = self.frenzel_zone_size(zone_number, distance)
@@ -98,9 +98,9 @@ class RadioPath():
             self.get_relief()
 
         # Iterate over the heights and compare with the height of the line of sight at that point.
-        for i in self.relief:
-            distance = i[0]
-            elevation = i[1]
+        for point in self.relief:
+            distance = point[0]
+            elevation = point[1]
             los_height = self.los_height(distance)
             arc_height = self.arc_height(distance)
             # Compare line of sight height and surface height + planet curvature
@@ -108,3 +108,28 @@ class RadioPath():
                 return False
 
         return True
+
+    def get_chart_data(self):
+        """ Chart data.
+            Returns a list of data points:
+            - distance from starting point
+            - relief height
+            - the height of the relief, taking into account the curvature of the planet
+            - line of sight height
+            - height of the first fresnel zone
+            - height of the second fresnel zone
+        """
+        chart_data = []
+        # checking the availability of terrain data. If not, then we calculate.
+        if len(self.relief) == 0:
+            self.get_relief()
+
+        for point in self.relief:
+            distance = point[0]
+            elevation = point[1]
+            los_height = self.los_height(distance)
+            arc_height = self.arc_height(distance)
+            frenzel_zone_1 = self.frenzel_zone_size(1, distance)
+            frenzel_zone_2 = self.frenzel_zone_size(2, distance)
+            chart_data.append((distance, elevation, los_height, arc_height, frenzel_zone_1, frenzel_zone_2))
+        return chart_data
