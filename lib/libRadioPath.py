@@ -61,7 +61,7 @@ class RadioPath():
             elevation = srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)
             # To save memory, if the previous point is at the same height and
             # the distance to it is not too large, then I do not add a new one
-            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 200:
+            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 100:
                 self.relief.append((distance, elevation))
 
         nextpoint = self.stoppoint
@@ -81,7 +81,7 @@ class RadioPath():
             elevation = i[1]
             los_height = self.los_height(distance)
             arc_height = self.arc_height(distance)
-            frenzel_zone = self.frenzel_zone_size(1, distance)
+            frenzel_zone = self.frenzel_zone_size(zone_number, distance)
             # Compare line of sight height and surface height + planet curvature
             if los_height - frenzel_zone < elevation + arc_height:
                 return False
