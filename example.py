@@ -1,29 +1,18 @@
 #!/usr/bin/env python
-import logging
 import matplotlib.pyplot as plt
 from lib import GeoPoint, RadioPath
 
 
-logging.basicConfig(
-    # filename='application.log',
-    level=logging.INFO,
-    format='[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
-)
-
-logging.info('start')
-
-p1 = GeoPoint(58.59152, 125.30347, name='Point1')
-p1.h = 75
-p2 = GeoPoint(58.92182, 125.98498, name='Point2')
-p2.h = 50
+p1 = GeoPoint(34.105719, -118.362051, name='Point1')
+p1.h = 15
+p2 = GeoPoint(34.054077, -118.156900, name='Point2')
+p2.h = 15
 
 r1 = RadioPath(p1, p1.h, p2, p2.h, 7)
-r1.get_relief()
-print(r1.relief)
-print(len(r1.relief))
-print(r1.line_of_sight())
 
+print('Having a line of sight - ', r1.line_of_sight())
+print('Visibility in 1 fresnel zone - ', r1.visibility_in_fresnel_zone(1))
+print('Visibility in 2 fresnel zone - ', r1.visibility_in_fresnel_zone(2))
 
 r1_chart = r1.get_chart_data()
 
@@ -40,17 +29,12 @@ plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_bottom'], color='lightco
 plt.fill_between(r1_chart['distance'], r1_chart['frenzel_zone_1_top'], r1_chart['frenzel_zone_1_bottom'], color='red', alpha=.05)
 plt.fill_between(r1_chart['distance'], r1_chart['relief_arc'], min(r1_chart['relief']), color='darkgreen', alpha=.4)
 
-plt.xlabel('Distance (km)')
+plt.xlabel('Distance (m)')
 plt.ylabel('Elevation (m)')
 plt.legend()
 plt.title(
     f'Profile from "{r1.startpoint.name}" {r1.startpoint.latitude} {r1.startpoint.longitude} H={r1.startheight} '
     f'to "{r1.stoppoint.name}" {r1.stoppoint.latitude} {r1.stoppoint.longitude}  H={r1.stopheight}\n'
     f'Distance {r1.length / 1000:.2f} km, Frequency {r1.frequency}GHz')
-plt.savefig(f"{r1.startpoint.name} - {r1.stoppoint.name}.png", dpi=300)
+plt.savefig(f"{r1.startpoint.name}-{r1.stoppoint.name}.png", dpi=300)
 plt.close()
-
-
-print(r1.line_of_sight())
-print(r1.visibility_in_fresnel_zone(1))
-print(r1.visibility_in_fresnel_zone(2))

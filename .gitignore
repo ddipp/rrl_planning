@@ -5,5 +5,4 @@ __pycache__
 data
 tmp
 log
-*.png
 # path.py
