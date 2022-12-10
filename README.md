@@ -1,5 +1,7 @@
 # rrl_planning
 ## Usage example
+To use, you need to prepare SRTM data (see below).
+
 For example, in the example.py file, the radio channel parameters (coordinates, antenna heights, frequency) are defined.
 The presence of a line of sight is displayed, taking into account the first and second Fresnel zones.
 Using mathplotlib, a radio channel profile is created.
