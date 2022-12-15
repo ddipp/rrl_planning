@@ -2,7 +2,7 @@
 *.sublime-project
 .venv/
 __pycache__
-data
+data/srtm3
 tmp
 log
 # path.py
