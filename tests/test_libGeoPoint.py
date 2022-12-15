@@ -2,24 +2,24 @@ from lib import GeoPoint
 
 
 def test_geo_point():
-    p1 = GeoPoint(56.86358, 60.62379, name='Point1', elevation=765)
-    assert p1.longitude == 60.62379
-    assert p1.latitude == 56.86358
-    assert p1.elevation == 765
-    assert p1.rlongitude == 1.0580847405376133
-    assert p1.rlatitude == 0.9924566954711972
+    p1 = GeoPoint(1.566691, 31.125062, name='Point1', elevation=902)
+    assert p1.latitude == 1.566691
+    assert p1.longitude == 31.125062
+    assert p1.elevation == 902
+    assert p1.rlongitude == 0.5432348117873713
+    assert p1.rlatitude == 0.027343916311362484
     assert p1.name == 'Point1'
-    assert p1.x == 1708572.6529589149
-    assert p1.y == 3035173.9704191233
-    assert p1.z == 5335541.431375747
-    p2 = GeoPoint(56.86358, 60.62379, name='Point1')
-    assert p2.elevation == 275
-    p3 = GeoPoint(44.332845, 47.673761, name='Point1')
-    assert p3.elevation == -29
-    p4 = GeoPoint(37.514828, 49.990733, name='Point1')
-    assert p4.elevation == -29
-    p5 = GeoPoint(43.350183, 42.451874, name='Point1')
-    assert p5.elevation == 5519
+    assert p1.x == 5452578.415637233
+    assert p1.y == 3292459.3907471513
+    assert p1.z == 174211.28990068485
+    p2 = GeoPoint(1.571950, 31.128231, name='Point1')
+    assert p2.elevation == 811
+    p3 = GeoPoint(1.615452, 31.141755, name='Point1')
+    assert p3.elevation == 615
+    p4 = GeoPoint(1.294512, 30.423211, name='Point1')
+    assert p4.elevation == 615
+    p5 = GeoPoint(1.661187, 30.600927, name='Point1')
+    assert p5.elevation == 2161
     p6 = GeoPoint(0, 0, name='00')
     assert p6.elevation is None
     assert p6.x == 6371009
@@ -36,44 +36,44 @@ def test_geo_diatsnce():
     p4 = GeoPoint(0, 180, name='g')
     assert p3.distance_to(p4) == 12742018
     assert p3.arc_distance_to(p4) == 20015115.070354454
-    p5 = GeoPoint(58, 125, name='Y')
-    p6 = GeoPoint(36, -9, name='S')
-    assert p5.distance_to(p6) == 8055902.777931563
-    assert p5.arc_distance_to(p6) == 8720408.57008249
-    p7 = GeoPoint(43.350183, 42.451874, name='Elbrus')
-    p8 = GeoPoint(43.350183, 42.451874, name='Elbrus sea level', elevation=0)
-    assert p7.distance_to(p8) == 5518.999999999588
+    p5 = GeoPoint(1.153820, 30.472736, name='Y')
+    p6 = GeoPoint(2.274309, 31.358084, name='S')
+    assert p5.distance_to(p6) == 158775.54764036834
+    assert p5.arc_distance_to(p6) == 158764.24295911446
+    p7 = GeoPoint(1.661187, 30.600927, name='Elbrus')
+    p8 = GeoPoint(1.661187, 30.600927, name='Elbrus sea level', elevation=0)
+    assert int(p7.distance_to(p8)) == 2160
     assert p7.arc_distance_to(p8) == 0.0
 
 
 def test_geo_azimuth():
-    p1 = GeoPoint(54.9132538, 34.3426619)
-    p2 = GeoPoint(54.9132538, 35.3426619)
-    assert p1.azimuth(p2) == 89.5908552147599
-    assert p2.azimuth(p1) == 270.4091447852401
-    p3 = GeoPoint(0, 0)
-    p4 = GeoPoint(0, 20)
+    p1 = GeoPoint(1.153820, 30.472736)
+    p2 = GeoPoint(2.274309, 31.358084)
+    assert p1.azimuth(p2) == 38.28910946532385
+    assert p2.azimuth(p1) == 218.31559343928947
+    p3 = GeoPoint(0, 0, elevation=0)
+    p4 = GeoPoint(0, 20, elevation=0)
     assert p3.azimuth(p4) == 90
     assert p4.azimuth(p3) == 270
-    p5 = GeoPoint(54.9132538, 34.3426619)
-    p6 = GeoPoint(55.9132538, 34.3426619)
+    p5 = GeoPoint(54.9132538, 34.3426619, elevation=0)
+    p6 = GeoPoint(55.9132538, 34.3426619, elevation=0)
     assert p5.azimuth(p6) == 0.0
     assert p6.azimuth(p5) == 180
-    p7 = GeoPoint(0, 0)
-    p8 = GeoPoint(1, 1)
+    p7 = GeoPoint(0, 0, elevation=0)
+    p8 = GeoPoint(1, 1, elevation=0)
     assert p7.azimuth(p8) == 44.99563645534485
     assert p8.azimuth(p7) == 225.00436354465515
-    p7 = GeoPoint(0, 0)
-    p8 = GeoPoint(90, 0)
+    p7 = GeoPoint(0, 0, elevation=0)
+    p8 = GeoPoint(90, 0, elevation=0)
     assert p7.azimuth(p8) == 0
     assert p8.azimuth(p7) == 180
 
 
 def test_geo_nextpoint():
-    p1 = GeoPoint(54.9132538, 34.3426619)
-    p2 = p1.nextpoint(azimuth=90, distance=500)
-    assert (p2.latitude, p2.longitude) == (54.913253548816705, 34.350484580324036)
-    assert int(p1.distance_to(p2)) == 500
+    p1 = GeoPoint(1.153820, 30.472736)
+    p2 = p1.nextpoint(azimuth=38.28910946532385, distance=158775.54764036834)
+    assert (p2.latitude, p2.longitude) == (2.274388767370144, 31.358147081424537)
+    assert int(p1.distance_to(p2)) == 158786
     p3 = GeoPoint(0, 0, name='N')
     p4 = p3.nextpoint(azimuth=-90, distance=20015115.070354454)
     assert (p4.latitude, p4.longitude) == (4.296495291499103e-31, -180)

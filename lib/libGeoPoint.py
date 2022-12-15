@@ -2,7 +2,7 @@ import json
 import math as m
 from lib.srtm import srtm
 
-EARTH_RADIUS = 6371.009 * 1000
+EARTH_RADIUS = 6371009
 
 
 class GeoPoint():

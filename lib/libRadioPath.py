@@ -2,7 +2,7 @@ import math as m
 from lib.srtm import srtm
 from lib import GeoPoint
 
-EARTH_RADIUS = 6371.009 * 1000
+EARTH_RADIUS = 6371009
 
 
 class RadioPath():
