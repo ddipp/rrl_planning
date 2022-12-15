@@ -80,3 +80,17 @@ def test_geo_nextpoint():
     p5 = GeoPoint(0, 0, name='N')
     p6 = p5.nextpoint(azimuth=90, distance=20015115.070354454 / 2)
     assert (p6.latitude, p6.longitude) == (3.508354649267438e-15, 90)
+
+
+def test_geo_to_json():
+    p1 = GeoPoint(1.153820, 30.472736)
+    assert p1.toJSON() == '{"latitude": 1.15382, "longitude": 30.472736, "name": "", "elevation": 622}'
+    p2 = GeoPoint(1.566691, 31.125062, name='Point1', elevation=902)
+    assert p2.toJSON() == '{"latitude": 1.566691, "longitude": 31.125062, "name": "Point1", "elevation": 902}'
+
+
+def test_geo_str():
+    p1 = GeoPoint(1.153820, 30.472736)
+    assert p1.__str__() == "GeoPoint name \t1.15382, 30.472736, 622"
+    p2 = GeoPoint(1.566691, 31.125062, name='Point1', elevation=902)
+    assert p2.__str__() == "GeoPoint name Point1\t1.566691, 31.125062, 902"
