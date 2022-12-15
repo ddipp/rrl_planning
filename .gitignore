@@ -6,3 +6,4 @@ data/srtm3
 tmp
 log
 # path.py
+.coverage

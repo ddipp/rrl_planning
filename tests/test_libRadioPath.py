@@ -54,6 +54,32 @@ def test_radio_path2():
 
 
 def test_radio_path3():
+    p1 = GeoPoint(1.594837, 31.158936, name='Point1')
+    p2 = GeoPoint(1.870223, 30.878149, name='Point2')
+    radiopath1 = RadioPath(startpoint=p1, startheight=1, stoppoint=p2, stopheight=1, frequency=13)
+    assert radiopath1.startpoint == p1
+    assert radiopath1.stoppoint == p2
+    assert radiopath1.frequency == 13
+    assert int(radiopath1.length) == 43726
+    assert radiopath1.startpoint.elevation == 660
+    assert radiopath1.stoppoint.elevation == 624
+    assert radiopath1.arc_height(0) == 0
+    assert radiopath1.arc_height(radiopath1.length) == 0
+    assert int(radiopath1.arc_height(radiopath1.length / 2)) == 37
+    assert int(radiopath1.arc_height(radiopath1.length / 4)) == 28
+    assert radiopath1.arc_height(radiopath1.length / 4) == radiopath1.arc_height(radiopath1.length / 4 * 3)
+    assert radiopath1.line_equation_b == 661
+    assert radiopath1.line_equation_k == -0.0008233033589831102
+    assert int(radiopath1.los_height(0)) == 661
+    assert int(radiopath1.los_height(radiopath1.length)) == 625
+    assert int(radiopath1.los_height(radiopath1.length / 2)) == 643
+    assert radiopath1.line_of_sight() is False
+    assert radiopath1.visibility_in_fresnel_zone(1) is False
+    assert radiopath1.visibility_in_fresnel_zone(2) is False
+    assert len(radiopath1.relief) == 403
+
+
+def test_radio_path_chart_data():
     p1 = GeoPoint(1.594748, 31.158804, name='Point1')
     p2 = GeoPoint(1.595744, 31.160749, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=40, stoppoint=p2, stopheight=40, frequency=13)
