@@ -1,5 +1,5 @@
 # rrl_planning
-[![codecov](https://codecov.io/gh/ddipp/rrl_planning/branch/main/graph/badge.svg?token=CK8LLFQU39)](https://codecov.io/gh/ddipp/rrl_planning)
+[![Testing status](https://github.com/ddipp/rrl_planning/actions/workflows/pytest.yml/badge.svg)](https://github.com/ddipp/rrl_planning/actions) [![codecov](https://codecov.io/gh/ddipp/rrl_planning/branch/main/graph/badge.svg?token=CK8LLFQU39)](https://codecov.io/gh/ddipp/rrl_planning)
 ## Usage example
 To use, you need to prepare SRTM data (see below).
 
