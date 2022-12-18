@@ -1,5 +1,5 @@
+import bz2
 import math as m
-from zipfile import ZipFile
 from pathlib import Path
 
 cache_dir = Path.cwd() / 'data' / 'cache'
@@ -30,15 +30,15 @@ def hgt_file(latitude: float, longitude: float) -> str:
     cache_hgt_file_name = cache_dir / hgt_file_name
     if not cache_hgt_file_name.exists():
         # Checking if the zip file exists
-        zip_hgt_file_name = srtm3_dir / hgt_file_name[0:3] / hgt_file_name
-        zip_hgt_file_name = zip_hgt_file_name.with_suffix('.zip')
+        bz2_hgt_file_name = srtm3_dir / hgt_file_name[0:3] / hgt_file_name
+        bz2_hgt_file_name = bz2_hgt_file_name.with_suffix('.hgt.bz2')
         # If no file exists for the given coordinates, then return None.
-        if not zip_hgt_file_name.exists():
+        if not bz2_hgt_file_name.exists():
             return None
         # Else unpack and return filename
         else:
-            with ZipFile(zip_hgt_file_name, mode='r') as archive:
-                open(cache_hgt_file_name, 'wb').write(archive.open(hgt_file_name).read())
+            with bz2.open(bz2_hgt_file_name, "rb") as f:
+                open(cache_hgt_file_name, 'wb').write(f.read())
             return cache_hgt_file_name
     else:
         return cache_hgt_file_name
