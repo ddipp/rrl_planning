@@ -110,7 +110,7 @@ To work with terrain data, you need SRTM data.
 Typically SRTM archives include areas between 60 degrees north latitude and 56 degrees south latitude. But on the Internet there is data for the relief of the entire planet (apparently compiled from various sources).
 From this [link](http://viewfinderpanoramas.org/Coverage%20map%20viewfinderpanoramas_org3.htm) I downloaded all the data, then using the "utils/recompress.py" script, the data was reformatted into the form:
 - folders with the name of the latitude in the format N00, N05, N34, S01, S45, etc.
-- inside latitude folders there are files for this latitude, each file is packed in zip. For example, folder N08 contains files N08E000.zip, N08E019.zip, N08E038.zip, N08E081.zip, N08E134.zip, N08W003.zip, etc.
+- inside latitude folders there are files for this latitude, each file is packed in bz2. For example, folder N08 contains files N08E000.hgt.bz2, N08E019.hgt.bz2, N08E038.hgt.bz2, N08E081.hgt.bz2, N08E134.hgt.bz2, N08W003.hgt.bz2, etc.
 
 Next, to work with SRTM3 files, you need to create a “data” folder in the root folder.
 In the "data" folder, create a "cache" and "srtm3" folder.
