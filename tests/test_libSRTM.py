@@ -10,6 +10,10 @@ def test_file_name_for_point():
 
 
 def test_get_elevation_point_NW():
+    assert srtm.get_elevation_point(2, 31) == 773
+    assert srtm.get_elevation_point(2, 31.99999) == 1092
+    assert srtm.get_elevation_point(2.99999, 31.99999) == 1143
+    assert srtm.get_elevation_point(2.99999, 31) == 962
     assert srtm.get_elevation_point(2.274309, 31.358084) == 615
     assert srtm.get_elevation_point(2.115976, 31.087493) == 1753
     assert srtm.get_elevation_point(2.079952, 31.121195) == 1509
@@ -19,6 +23,10 @@ def test_get_elevation_point_NW():
 
 
 def test_get_elevation_point_SW():
+    assert srtm.get_elevation_point(-4.00001, 29) == 1632
+    assert srtm.get_elevation_point(-4.00001, 29.99999) == 1334
+    assert srtm.get_elevation_point(-4.99999, 29.99999) == 1095
+    assert srtm.get_elevation_point(-4.99999, 29) == 1981
     assert srtm.get_elevation_point(-4.106989, 29.105975) == 767
     assert srtm.get_elevation_point(-4.139669, 29.411452) == 767
     assert srtm.get_elevation_point(-4.159174, 29.238954) == 1444
@@ -27,6 +35,10 @@ def test_get_elevation_point_SW():
 
 
 def test_get_elevation_point_NE():
+    assert srtm.get_elevation_point(52, -6.00001) == 0
+    assert srtm.get_elevation_point(52, -6.99999) == 0
+    assert srtm.get_elevation_point(52.99999, -6.99999) == 60
+    assert srtm.get_elevation_point(52.99999, -6.00001) == 0
     assert srtm.get_elevation_point(52.966951, -6.465526) == 919
     assert srtm.get_elevation_point(52.959848, -6.336204) == 449
     assert srtm.get_elevation_point(52.968336, -6.183284) == 203
@@ -36,6 +48,10 @@ def test_get_elevation_point_NE():
 
 
 def test_get_elevation_point_SE():
+    assert srtm.get_elevation_point(-3.00001, -79.00001) == 2818
+    assert srtm.get_elevation_point(-3.00001, -79.99999) == 0
+    assert srtm.get_elevation_point(-3.99999, -79.99999) == 1213
+    assert srtm.get_elevation_point(-3.99999, -79.00001) == 2096
     assert srtm.get_elevation_point(-3.991163, -79.092340) == 2005
     assert srtm.get_elevation_point(-3.957352, -79.023306) == 1553
     assert srtm.get_elevation_point(-3.991068, -79.015972) == 1507
@@ -50,5 +66,6 @@ def test_get_all_points():
 
 def test_unpack_zip():
     assert srtm.get_elevation_point(0.1, 72.1) == 0
+    assert os.path.exists("data/cache/N00E072.hgt")
     if os.path.exists("data/cache/N00E072.hgt"):
         os.remove("data/cache/N00E072.hgt")
