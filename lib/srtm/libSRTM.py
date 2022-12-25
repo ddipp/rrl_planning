@@ -12,15 +12,12 @@ def file_name_for_point(latitude: float, longitude: float) -> str:
     north_south = 'N' if latitude >= 0 else 'S'
     east_west = 'E' if longitude >= 0 else 'W'
     # The coordinates are converted so that the numbers are cut down to the integer (12.123 -> 12, -12.123 -> -13, -12 -> -13)
-    if latitude < 0:
-        latitude -= 1
-    if longitude < 0:
-        longitude -= 1
+    latitude = latitude - (1 if latitude < 0 else 0)
+    longitude = longitude - (1 if longitude < 0 else 0)
     latitude = abs(int(latitude))
     longitude = abs(int(longitude))
     file_name = '{0}{1}{2}{3}.hgt'.format(north_south, str(latitude).zfill(2),
                                           east_west, str(longitude).zfill(3))
-    print(file_name)
     return file_name
 
 
