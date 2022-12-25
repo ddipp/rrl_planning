@@ -7,9 +7,7 @@ For example, in the example.py file, the radio channel parameters (coordinates, 
 The presence of a line of sight is displayed, taking into account the first and second Fresnel zones.
 Using mathplotlib, a radio channel profile is created.
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip3 install --no-cache-dir -r requirements.txt
+. init_venv.sh
 
 ./example.py
 ````

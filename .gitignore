@@ -1,7 +1,6 @@
 *.sublime-workspace
 *.sublime-project
 init_venv.dev.sh
-init_venv.sh
 .venv/
 __pycache__
 data/srtm3
