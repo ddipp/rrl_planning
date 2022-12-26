@@ -59,10 +59,18 @@ class RadioPath():
             distance += incremental
             nextpoint = self.startpoint.nextpoint(self.startpoint.azimuth(self.stoppoint), distance)
             elevation = srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)
-            # To save memory, if the previous point is at the same height and
-            # the distance to it is not too large, then I do not add a new one
-            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 100:
-                self.relief.append((distance, elevation))
+
+            self.relief.append((distance, elevation))
+
+            # For flat surfaces, it makes no sense to keep all the points.
+            # Check: if the three previous points have the same height, then remove the middle one.
+            if len(self.relief) > 3 and (self.relief[-1][1] == self.relief[-2][1] and self.relief[-1][1] == self.relief[-3][1]):
+                # But check the distance to the third point from the end.
+                # For long flat surfaces, you still need to draw a surface (for example, a long stretch of water)
+                if distance - self.relief[-3][0] < 250:
+                    del self.relief[-2]
+
+#            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 200:
 
         nextpoint = self.stoppoint
         self.relief.append((self.length, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))

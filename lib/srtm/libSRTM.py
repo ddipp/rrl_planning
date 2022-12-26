@@ -11,14 +11,16 @@ def file_name_for_point(latitude: float, longitude: float) -> str:
     """
     north_south = 'N' if latitude >= 0 else 'S'
     east_west = 'E' if longitude >= 0 else 'W'
-    # The coordinates are converted so that the numbers are cut down to the integer (12.123 -> 12, -12.123 -> -13, -12 -> -13)
+    # The coordinates are converted so that the numbers are truncated to integers.
+    # However, since the reference point in the HGT file starts from the lower left corner,
+    # one degree must be subtracted for the negative coordinate.
+    # (12.123 -> 12, -12.123 -> -13, -12 -> -13)
     latitude = latitude - (1 if latitude < 0 else 0)
     longitude = longitude - (1 if longitude < 0 else 0)
     latitude = abs(int(latitude))
     longitude = abs(int(longitude))
-    file_name = '{0}{1}{2}{3}.hgt'.format(north_south, str(latitude).zfill(2),
-                                          east_west, str(longitude).zfill(3))
-    return file_name
+    return '{0}{1}{2}{3}.hgt'.format(north_south, str(latitude).zfill(2),
+                                     east_west, str(longitude).zfill(3))
 
 
 def hgt_file(latitude: float, longitude: float) -> str:
