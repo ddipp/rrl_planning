@@ -83,7 +83,7 @@ def test_radio_path_chart_data():
     p1 = GeoPoint(1.594748, 31.158804, name='Point1')
     p2 = GeoPoint(1.595744, 31.160749, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=40, stoppoint=p2, stopheight=40, frequency=13)
-    # print(radiopath1.get_chart_data())
+
     assert radiopath1.get_chart_data() == {
         'distance': [0, 10, 90, 100, 160, 170, 200, 210, 240, 243.5269906724964],
         'relief': [660, 660, 660, 690, 690, 641, 641, 677, 677, 677],
