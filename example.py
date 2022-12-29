@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import matplotlib.pyplot as plt
 from lib import GeoPoint, RadioPath
 
@@ -21,12 +22,13 @@ plt.grid(False)
 plt.plot(r1_chart['distance'], r1_chart['relief'], label="Elevation", linestyle='solid', linewidth=0.5)
 plt.plot(r1_chart['distance'], r1_chart['relief_arc'], label="Surface with curvature of the earth", color='darkgreen', linewidth=0.5)
 plt.plot(r1_chart['distance'], r1_chart['los_height'], color='darkred', label="Line of sight", linewidth=0.5)
-plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_top'], label="1 Frenzel zone", color='red', linewidth=0.5)
-plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_bottom'], color='red', linewidth=0.5)
+plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_top'], label="1 Frenzel zone", color='red', linewidth=0.15)
+plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_bottom'], color='red', linewidth=0.15)
 plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_top'], label="2 Frenzel zone", color='lightcoral', linewidth=0.5)
-plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_bottom'], color='lightcoral', linewidth=0.5)
+plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_bottom'], color='coral', linewidth=0.5)
 
-plt.fill_between(r1_chart['distance'], r1_chart['frenzel_zone_1_top'], r1_chart['frenzel_zone_1_bottom'], color='red', alpha=.05)
+plt.fill_between(r1_chart['distance'], r1_chart['frenzel_zone_1_top'],
+                 r1_chart['frenzel_zone_1_bottom'], color='red', alpha=.15, linewidth=0)
 plt.fill_between(r1_chart['distance'], r1_chart['relief_arc'], min(r1_chart['relief']), color='darkgreen', alpha=.4)
 
 plt.xlabel('Distance (m)')

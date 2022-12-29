@@ -70,8 +70,6 @@ class RadioPath():
                 if distance - self.relief[-3][0] < 250:
                     del self.relief[-2]
 
-#            if self.relief[-1][1] != elevation or distance - self.relief[-1][0] > 200:
-
         nextpoint = self.stoppoint
         self.relief.append((self.length, srtm.get_elevation_point(nextpoint.latitude, nextpoint.longitude)))
 
