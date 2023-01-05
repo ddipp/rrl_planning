@@ -25,7 +25,7 @@ plt.plot(r1_chart['distance'], r1_chart['los_height'], color='darkred', label="L
 plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_top'], label="1 Frenzel zone", color='red', linewidth=0.15)
 plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_1_bottom'], color='red', linewidth=0.15)
 plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_top'], label="2 Frenzel zone", color='lightcoral', linewidth=0.5)
-plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_bottom'], color='coral', linewidth=0.5)
+plt.plot(r1_chart['distance'], r1_chart['frenzel_zone_2_bottom'], color='lightcoral', linewidth=0.5)
 
 plt.fill_between(r1_chart['distance'], r1_chart['frenzel_zone_1_top'],
                  r1_chart['frenzel_zone_1_bottom'], color='red', alpha=.15, linewidth=0)
