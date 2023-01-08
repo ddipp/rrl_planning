@@ -125,8 +125,9 @@ class RadioPath():
             - height of the first fresnel zone
             - height of the second fresnel zone
         """
-        chart_data = {'distance': [], 'relief': [], 'relief_arc': [], 'los_height': [], 'frenzel_zone_1_top': [],
-                      'frenzel_zone_1_bottom': [], 'frenzel_zone_2_top': [], 'frenzel_zone_2_bottom': []}
+        chart_data = {'distance': [], 'relief': [], 'relief_arc': [], 'los_height': [],
+                      'frenzel_zone_1_top': [], 'frenzel_zone_1_bottom': [],
+                      'frenzel_zone_2_top': [], 'frenzel_zone_2_bottom': []}
         # checking the availability of terrain data. If not, then we calculate.
         if len(self.relief) == 0:
             self.get_relief()
@@ -145,3 +146,6 @@ class RadioPath():
             chart_data['frenzel_zone_2_top'].append(los_height + self.frenzel_zone_size(2, distance))
             chart_data['frenzel_zone_2_bottom'].append(los_height - self.frenzel_zone_size(2, distance))
         return chart_data
+
+    def free_space_loss(self):
+        return 20 * m.log((4 * m.pi * self.length * self.frequency) / 2.99792459e8)
