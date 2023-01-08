@@ -23,6 +23,17 @@ class RadioPath():
         self.line_equation_b = (self.stoppoint.elevation + self.stopheight) - self.line_equation_k * self.length
         # List for relief
         self.relief = list()
+        # Radio parameters
+        self.tx_power = None
+        self.receiver_sensitivity = None
+        self.antenna_gain_a = None
+        self.antenna_gain_b = None
+
+    def set_radio_parameters(self, tx_power, receiver_sensitivity, antenna_gain_a, antenna_gain_b):
+        self.tx_power = tx_power
+        self.receiver_sensitivity = receiver_sensitivity
+        self.antenna_gain_a = antenna_gain_a
+        self.antenna_gain_b = antenna_gain_b
 
     def arc_height(self, distance: int) -> float:
         """ The height of the planet's arc at a given distance (in meters) from the start of the path
@@ -67,7 +78,7 @@ class RadioPath():
             if len(self.relief) > 3 and (self.relief[-1][1] == self.relief[-2][1] and self.relief[-1][1] == self.relief[-3][1]):
                 # But check the distance to the third point from the end.
                 # For long flat surfaces, you still need to draw a surface (for example, a long stretch of water)
-                if distance - self.relief[-3][0] < 250:
+                if distance - self.relief[-3][0] < 500:
                     del self.relief[-2]
 
         nextpoint = self.stoppoint
@@ -148,4 +159,7 @@ class RadioPath():
         return chart_data
 
     def free_space_loss(self):
-        return 20 * m.log((4 * m.pi * self.length * self.frequency) / 2.99792459e8)
+        return 92.44 + 20 * m.log10(self.frequency) + 20 * m.log10(self.length / 1000)
+
+    def expected_signal_strength(self):
+        return self.tx_power + self.antenna_gain_a + self.antenna_gain_b - self.free_space_loss()

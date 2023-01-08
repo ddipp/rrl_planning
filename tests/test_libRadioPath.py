@@ -5,6 +5,7 @@ def test_radio_path1():
     p1 = GeoPoint(1.594837, 31.158936, name='Point1')
     p2 = GeoPoint(1.870223, 30.878149, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=20, stoppoint=p2, stopheight=20, frequency=17)
+    radiopath1.set_radio_parameters(tx_power=18, receiver_sensitivity=-65, antenna_gain_a=38.1, antenna_gain_b=38.1)
     assert radiopath1.startpoint == p1
     assert radiopath1.stoppoint == p2
     assert radiopath1.frequency == 17
@@ -24,13 +25,16 @@ def test_radio_path1():
     assert radiopath1.visibility_in_fresnel_zone(1) is False
     assert radiopath1.line_of_sight() is True
     assert radiopath1.visibility_in_fresnel_zone(2) is False
-    assert len(radiopath1.relief) == 199
+    assert len(radiopath1.relief) == 107
+    assert round(radiopath1.free_space_loss(), 2) == 149.86
+    assert round(radiopath1.expected_signal_strength(), 2) == -55.66
 
 
 def test_radio_path2():
     p1 = GeoPoint(1.594837, 31.158936, name='Point1')
     p2 = GeoPoint(1.870223, 30.878149, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=40, stoppoint=p2, stopheight=40, frequency=13)
+    radiopath1.set_radio_parameters(tx_power=18, receiver_sensitivity=-65, antenna_gain_a=38.1, antenna_gain_b=38.1)
     assert radiopath1.startpoint == p1
     assert radiopath1.stoppoint == p2
     assert radiopath1.frequency == 13
@@ -50,13 +54,16 @@ def test_radio_path2():
     assert radiopath1.line_of_sight() is True
     assert radiopath1.visibility_in_fresnel_zone(1) is True
     assert radiopath1.visibility_in_fresnel_zone(2) is True
-    assert len(radiopath1.relief) == 199
+    assert len(radiopath1.relief) == 107
+    assert round(radiopath1.free_space_loss(), 2) == 147.53
+    assert round(radiopath1.expected_signal_strength(), 2) == -53.33
 
 
 def test_radio_path3():
     p1 = GeoPoint(1.594837, 31.158936, name='Point1')
     p2 = GeoPoint(1.870223, 30.878149, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=1, stoppoint=p2, stopheight=1, frequency=13)
+    radiopath1.set_radio_parameters(tx_power=18, receiver_sensitivity=-65, antenna_gain_a=38.1, antenna_gain_b=38.1)
     assert radiopath1.startpoint == p1
     assert radiopath1.stoppoint == p2
     assert radiopath1.frequency == 13
@@ -76,13 +83,16 @@ def test_radio_path3():
     assert radiopath1.line_of_sight() is False
     assert radiopath1.visibility_in_fresnel_zone(1) is False
     assert radiopath1.visibility_in_fresnel_zone(2) is False
-    assert len(radiopath1.relief) == 199
+    assert len(radiopath1.relief) == 107
+    assert round(radiopath1.free_space_loss(), 2) == 147.53
+    assert round(radiopath1.expected_signal_strength(), 2) == -53.33
 
 
 def test_radio_path_chart_data():
     p1 = GeoPoint(1.594748, 31.158804, name='Point1')
     p2 = GeoPoint(1.595744, 31.160749, name='Point2')
     radiopath1 = RadioPath(startpoint=p1, startheight=40, stoppoint=p2, stopheight=40, frequency=13)
+    radiopath1.set_radio_parameters(tx_power=18, receiver_sensitivity=-65, antenna_gain_a=38.1, antenna_gain_b=38.1)
 
     assert radiopath1.get_chart_data() == {
         'distance': [0, 10, 90, 100, 160, 170, 200, 210, 240, 243.5269906724964],

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-
+import logging
 import matplotlib.pyplot as plt
 from lib import GeoPoint, RadioPath
 
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s: %(levelname)s] %(message)s')
 
 p1 = GeoPoint(34.105719, -118.362051, name='Point1')
 p1.h = 15
@@ -10,10 +11,15 @@ p2 = GeoPoint(34.054077, -118.156900, name='Point2')
 p2.h = 15
 
 r1 = RadioPath(p1, p1.h, p2, p2.h, 7)
+r1.set_radio_parameters(tx_power=18, receiver_sensitivity=-65, antenna_gain_a=38.1, antenna_gain_b=38.1)
 
-print('Having a line of sight - ', r1.line_of_sight())
-print('Visibility in 1 fresnel zone - ', r1.visibility_in_fresnel_zone(1))
-print('Visibility in 2 fresnel zone - ', r1.visibility_in_fresnel_zone(2))
+logging.info(f'Having a line of sight - {r1.line_of_sight()}')
+logging.info(f'Visibility in 1 fresnel zone - {r1.visibility_in_fresnel_zone(1)}')
+logging.info(f'Visibility in 2 fresnel zone - {r1.visibility_in_fresnel_zone(2)}')
+logging.info(f'Points: {len(r1.relief)}')
+logging.info(f'FSL: {r1.free_space_loss():.1f} dB')
+logging.info(f'Length: {r1.length / 1000:.2f} km')
+logging.info(f'Expected RX level: {r1.expected_signal_strength():.1f} dBm')
 
 r1_chart = r1.get_chart_data()
 
